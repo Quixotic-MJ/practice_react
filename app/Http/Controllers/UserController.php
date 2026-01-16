@@ -13,4 +13,14 @@ class UserController extends Controller
         
         return response()->json($users);
     }
+
+    public function login(Request $req) {
+        $email = $req->email;
+        $password = $req->password;
+        $isValid = User::validate($email, $password);
+
+        return response()->json($isValid);
+    }
+
+
 }
