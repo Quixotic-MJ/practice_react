@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 function Home() {
     const [comment, setComment] = useState({
-        id: new Date().toDateString(),
+        id: '',
         username: "John Mark",
         initial: "JM",
         text: "",
@@ -14,26 +14,27 @@ function Home() {
     const [message, setMessage] = useState("");
 
     const postComment = async () => {
-        const { text } = comment;
 
-        if (!text) {
-            return;
-        }
+        if (!comment.text) return;
 
         try {
-            const res = await axios.post("/comment", text);
+            const res = await axios.post("/comment",  comment);
 
             if (res.data.status === "approved") {
-                setComment({
-                    ...comment,
-                    text: res.data.text,
-                });
 
-                setComments([(prev) => [...prev, comment]]);
+              const newComment = {
+                ...comment,
+                id: 1,
+                text: res.data.text
+              }
+
+                setComments(prev => [...prev, newComment]);
                 setComment({
                     ...comment,
                     text: "",
+                    id: "",
                 });
+                setMessage("")
             } else {
                 setMessage(res.data.text);
             }
@@ -52,7 +53,7 @@ function Home() {
                     </label>
                     <textarea
                         id="comment"
-                        value={comment.comment}
+                        value={comment.text}
                         onChange={(e) =>
                             setComment({
                                 ...comment,
@@ -76,8 +77,8 @@ function Home() {
                             type="button"
                             onClick={() => {
                                 setComment({
-                                    ...comment,
-                                    comment: "",
+                                    ...comment,       
+                                    text: "",
                                 });
                             }}
                             className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
@@ -120,7 +121,7 @@ function Home() {
                                     </span>
                                 </div>
                                 <p className="text-sm text-gray-700">
-                                    {com.comment}
+                                    {com.text}
                                 </p>
                             </div>
                         </div>
