@@ -1,5 +1,5 @@
 import "./bootstrap.js";
-// import "../css/app.css";
+import "../css/app.css";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,8 +14,8 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/login" element={<Login/>} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/" element={<Sample />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/sample" element={<Sample />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
             </Routes>
